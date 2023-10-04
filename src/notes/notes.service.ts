@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { Notes, Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class NotesService {
@@ -17,27 +17,27 @@ export class NotesService {
   }
 
   findOne(id: string) {
-    return this.prisma.notes.findUnique({
+    return this.prisma.notes.findFirst({
       where: {
         id: id,
-      }
-    })
+      },
+    });
   }
 
   update(id: string, updateNoteDto: Prisma.NotesUpdateInput) {
     return this.prisma.notes.update({
       where: {
-        id: id
+        id: id,
       },
-      data: updateNoteDto
+      data: updateNoteDto,
     });
   }
 
   remove(id: string) {
     return this.prisma.notes.delete({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
   }
 }
